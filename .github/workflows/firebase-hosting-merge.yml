@@ -11,7 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: yarn lint && yarn build
+
+      - name: Set Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install packages
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+
+      - name: Lint
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: lint
+
+      - name: Build
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
